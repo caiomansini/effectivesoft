@@ -4,6 +4,7 @@ This repository contains the code for the Proof of Concept for the Chatbot
 
 # Folder Structure
 
+``` bash
 📁 EffectiveSoft_PoC/
 ├── app.py                  # Streamlit UI
 ├── chains/
@@ -21,3 +22,4 @@ This repository contains the code for the Proof of Concept for the Chatbot
 │   └── settings.py         # sidebar, configs, state
 ├── data/
 │   └── tmp/                # uploaded files
+```
