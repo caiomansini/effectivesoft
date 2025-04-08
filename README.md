@@ -1,6 +1,19 @@
-# EffectiveSoft
+## EffectiveSoft
 This repository contains the code for the Proof of Concept for the Chatbot
 
+# Problem Statement
+Sales support bot
+The company requesting the project could be either known or unknown to us. As part of preparation, the company wants to develop a Chatbot that is capable of:
+
+Known Companies:
+1. Collect general details about the company
+2. Collect the contacts of people who have worked with the company
+3. Collect an overview of our previous collaboration experience with this company
+
+Unknown Companies:
+1. Collect general details about the company
+2. Be able to submit an opportunity with known details
+3. Be able to ask the system to draft a proposal presentation with relevant use cases included into it
 
 # Folder Structure
 
