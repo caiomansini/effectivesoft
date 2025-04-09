@@ -36,3 +36,13 @@ Unknown Companies:
 ├── data/
 │   └── tmp/                # uploaded files
 ```
+
+# Instructions
+1. Create a virtual environment: python -m venv effectivesoft_chatbot
+2. Activate the virtual env
+3. Enter the directory
+4. Install all the required dependencies
+5. Change the API KEYS in the .env file
+6. Start the app: streamlit run app.py
+7. Enjoy
+
