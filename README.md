@@ -38,11 +38,11 @@ Unknown Companies:
 ```
 
 # Instructions
-1. Create a virtual environment: python -m venv effectivesoft_chatbot
-2. Activate the virtual env
-3. Enter the directory
-4. Install all the required dependencies
+1. Create a virtual environment: ``` python -m venv effectivesoft_chatbot```
+2. Activate the virtual env: ``` .\effectivesoft_chatbot\Scripts\Activate ```
+3. Enter the directory: ``` cd effectivesoft_chatbot ```
+4. Install all the required dependencies: ``` pip install -r requirements.txt ```
 5. Change the API KEYS in the .env file
-6. Start the app: streamlit run app.py
+6. Start the app: ``` streamlit run app.py ```
 7. Enjoy
 
