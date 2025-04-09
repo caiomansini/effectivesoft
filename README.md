@@ -18,7 +18,7 @@ Unknown Companies:
 # Folder Structure
 
 ``` bash
-📁 EffectiveSoft_PoC/
+📁 effective_soft_chatbot/
 ├── app.py                  # Streamlit UI
 ├── chains/
 │   └── rag_chain.py        # create_ConversationalRetrievalChain, memory
