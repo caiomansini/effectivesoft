@@ -1,40 +1,35 @@
 from langchain.chat_models import ChatOpenAI
+from tools.internal_lookup import safe_internal_lookup
 import streamlit as st
 
+
 def generate_sales_pitch(company_name: str) -> str:
-    """
-    Combines internal document insights with generative logic
-    to create a 3-slide sales pitch tailored to a specific company.
-    """
-    # Step 1: Try retrieving internal knowledge
-    context = ""
-    if "chain" in st.session_state:
-        try:
-            result = st.session_state.chain.invoke({"question": f"What do we know about {company_name}?"})
-            context = result.get("answer", "")
-        except Exception as e:
-            context = ""
+    # Try to get internal knowledge from the retriever first
+    try:
+        internal_summary = safe_internal_lookup(f"What do we know about {company_name}?")
+    except:
+        internal_summary = "No internal data available."
 
-    # Step 2: Ask the LLM to write the pitch using both internal and general reasoning
     prompt = f"""
-    Using the following context (if any), write a short 3-slide sales pitch for {company_name}.
+        You are preparing a 3-slide sales pitch for {company_name}.
+        Optionally uses a reference company (e.g., a known project) as inspiration.
 
-    Context:
-    {context if context else "No internal data available."}
+        Use this internal knowledge (if any):  
+        {internal_summary}
 
-    Slide 1: Who they are and what industry they're in.
-    Slide 2: Relevant AI/Data Science use cases tailored to their business.
-    Slide 3: A call to action and proposed next steps.
+        ---
 
-    Write in a professional tone. Include any insights from the internal context, if available.
-    """
+        Slide 1: Company overview and strategic challenges 
+        Slide 2: Relevant AI/Data Science use cases tailored to their industry and pain points.  
+        Slide 3: Proposal summary and next steps
+
+        Tailor suggestions to the assumed industry and needs of the target company. Use a professional tone.
+        """
 
     llm = ChatOpenAI(
-        model=st.session_state.selected_model,
-        temperature=0.4,
-        openai_api_key=st.session_state.openai_api_key,
-        max_tokens=700,
-        model_kwargs={"top_p": st.session_state.top_p}
+        api_key=st.session_state.openai_api_key,
+        model='gpt-4o',
+        temperature=0.1,
+        model_kwargs={"top_p": st.session_state.top_p},
     )
-
-    return llm.invoke(prompt).content
+    return "### 🧾 Sales Proposal\n\n" + llm.invoke(prompt).content

@@ -19,3 +19,17 @@ def is_low_relevance(query, threshold=0.35):
     retriever = st.session_state.retriever
     results = retriever.get_relevant_documents(query)
     return all(doc.metadata.get("score", 1.0) < threshold for doc in results)
+
+def get_company_filtered_retriever(vectorstore, company_name=None, top_k=10):
+    """
+    Returns a retriever scoped to a specific company using metadata filtering.
+    """
+    if not company_name:
+        company_name = st.session_state.get("current_company", "Unknown")
+
+    retriever = vectorstore.as_retriever(search_kwargs={
+        "k": top_k,
+        "filter": {"company": company_name}
+    })
+
+    return retriever

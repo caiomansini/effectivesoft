@@ -2,7 +2,7 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.prompts import PromptTemplate
 from langchain.vectorstores import Chroma
 from utils.file_loader import load_and_split_all_documents
-from retrievers.setup import select_embeddings_model
+from retrievers.setup import select_embeddings_model, get_company_filtered_retriever
 import streamlit as st
 
 def answer_template():
@@ -48,4 +48,9 @@ def create_vectorstore_from_uploaded_documents(persist_dir="data/vectorstore"):
 
     vectorstore.persist()
     st.success(f"Vectorstore created with {len(docs)} chunks.")
+
+    # Set the filtered retriever scoped to the current company
+    company_name = st.session_state.get("current_company", "Unknown")
+    st.session_state.retriever = get_company_filtered_retriever(vectorstore, company_name)
+
     return vectorstore
