@@ -35,6 +35,7 @@ Unknown Companies:
 │   └── settings.py         # sidebar, configs, state
 ├── data/
 │   └── tmp/                # uploaded files
+
 ```
 
 # Instructions
@@ -43,6 +44,7 @@ Unknown Companies:
 3. Enter the directory: ``` cd effectivesoft_chatbot ```
 4. Install all the required dependencies: ``` pip install -r requirements.txt ```
 5. Change the API KEYS in the .env file
-6. Start the app: ``` streamlit run app.py ```
-7. Enjoy
+6. Change the API Keys in ``` .streamlit/secrets.toml ```
+7. Start the app: ``` streamlit run app.py ```
+8. Enjoy
 
