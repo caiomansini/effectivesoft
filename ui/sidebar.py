@@ -24,7 +24,7 @@ def sidebar_and_documentChooser():
 
     # ✅ NEW: Embedding model selector
     st.session_state.embeddings_model = st.sidebar.selectbox(
-        "Embedding Model", ["openai", "huggingface"], index=1
+        "Embedding Model", ["openai", "huggingface"], index=0
     )
 
     st.session_state.temperature = st.sidebar.slider("Temperature", 0.0, 1.0, 0.3)

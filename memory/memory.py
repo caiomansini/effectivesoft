@@ -1,6 +1,10 @@
 import tiktoken
-from langchain.memory import ConversationSummaryBufferMemory
+from langchain.memory import (
+    ConversationBufferMemory,
+    ConversationSummaryBufferMemory
+)
 from langchain.chat_models import ChatOpenAI
+
 
 class PatchedSummaryMemory(ConversationSummaryBufferMemory):
     """
@@ -18,19 +22,32 @@ class PatchedSummaryMemory(ConversationSummaryBufferMemory):
         num_tokens += 2  # priming
         return num_tokens
 
+
 def create_memory(model_name="gpt-4o", memory_max_token=4096, api_key=None):
     """
-    Returns a token-safe ConversationSummaryBufferMemory instance.
+    Dynamically selects the most appropriate memory class based on model support.
+    - Uses token-aware PatchedSummaryMemory for gpt-3.5 / gpt-4
+    - Falls back to ConversationBufferMemory for unsupported models (or you can reverse this)
     """
-    return PatchedSummaryMemory(
-        llm=ChatOpenAI(
-            model_name=model_name,
-            openai_api_key=api_key,
-            temperature=0.1
-        ),
-        max_token_limit=memory_max_token,
-        return_messages=True,
-        memory_key="chat_history",
-        output_key="answer",
-        input_key="question"
-    )
+    summary_safe_models = ["gpt-3.5-turbo", "gpt-4", "gpt-4-turbo"]
+
+    if model_name in summary_safe_models:
+        return PatchedSummaryMemory(
+            llm=ChatOpenAI(
+                model_name=model_name,
+                openai_api_key=api_key,
+                temperature=0.1
+            ),
+            max_token_limit=memory_max_token,
+            return_messages=True,
+            memory_key="chat_history",
+            output_key="answer",
+            input_key="question"
+        )
+    else:
+        return ConversationBufferMemory(
+            return_messages=True,
+            memory_key="chat_history",
+            output_key="answer",
+            input_key="question"
+        )

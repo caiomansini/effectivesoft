@@ -24,6 +24,8 @@ def generate_sales_pitch(company_name: str) -> str:
         Slide 3: Proposal summary and next steps
 
         Tailor suggestions to the assumed industry and needs of the target company. Use a professional tone.
+        
+        Always include tool outputs in the final answer.
         """
 
     llm = ChatOpenAI(
